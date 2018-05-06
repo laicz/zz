@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.zz.seckill.dao.TSeckillMapper">
+  <resultMap id="BaseResultMap" type="com.zhou.zz.seckill.model.TSeckill">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sku" jdbcType="VARCHAR" property="sku" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_seckill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhou.zz.seckill.model.TSeckill">
+    insert into t_seckill (id, sku, num, 
+      price)
+    values (#{id,jdbcType=INTEGER}, #{sku,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
+      #{price,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zhou.zz.seckill.model.TSeckill">
+    update t_seckill
+    set sku = #{sku,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      price = #{price,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, sku, num, price
+    from t_seckill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, sku, num, price
+    from t_seckill
+  </select>
+  <!-- 修改库存 -->
+  <update id="updateNum" parameterType="map">
+  	update t_seckill set num = num - #{buys} where sku=#{sku} and num - #{buys} >= 0 
+  </update>
+</mapper>

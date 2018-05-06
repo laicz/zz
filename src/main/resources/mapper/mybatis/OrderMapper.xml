@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhou.zz.mybatis.dao.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.zhou.zz.mybaties.model.Order">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="userid" property="userid" jdbcType="INTEGER" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="createTime" property="createtime" jdbcType="DATE" />
+		<result column="note" property="note" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap type="com.zhou.zz.mybaties.model.Order" id="orderWithOrderdetailMap">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="userid" property="userid" jdbcType="INTEGER" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="createTime" property="createtime" jdbcType="DATE" />
+		<result column="note" property="note" jdbcType="VARCHAR" />
+		<collection property="orderdetails"
+			ofType="com.zhou.zz.mybaties.model.Orderdetail">
+			<id column="orderdetail_id" property="id" jdbcType="INTEGER" />
+<!-- 			<result column="orderid" property="orderid" jdbcType="INTEGER" /> -->
+			<result column="itemid" property="itemid" jdbcType="INTEGER" />
+			<result column="itemsNum" property="itemsnum" jdbcType="INTEGER" />
+		</collection>
+	</resultMap>
+	<select id="findOrderAndDetailResultMap" resultMap="orderWithOrderdetailMap">
+		SELECT o.*,od.* FROM `order` o LEFT JOIN orderdetail od ON o.id=od.orderid WHERE o.id=#{id}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from order
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.zhou.zz.mybaties.model.Order">
+		insert into order (id, userid,
+		number,
+		createTime, note)
+		values (#{id,jdbcType=INTEGER},
+		#{userid,jdbcType=INTEGER},
+		#{number,jdbcType=VARCHAR},
+		#{createtime,jdbcType=DATE}, #{note,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.zhou.zz.mybaties.model.Order">
+		update order
+		set
+		userid = #{userid,jdbcType=INTEGER},
+		number =
+		#{number,jdbcType=VARCHAR},
+		createTime = #{createtime,jdbcType=DATE},
+		note = #{note,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, userid, number, createTime, note
+		from order
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, userid, number,
+		createTime, note
+		from order
+	</select>
+</mapper>

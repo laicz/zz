@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhou.zz.mybatis.dao.TUserMapper" >
+  <resultMap id="BaseResultMap" type="com.zhou.zz.mybaties.model.TUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loginId" property="loginid" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+<!--     <result column="roleId" property="roleid" jdbcType="INTEGER" /> -->
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <association property="role" javaType="com.zhou.zz.mybaties.model.Role">
+    	<id column="role_id" property="id" jdbcType="INTEGER" />
+    	<result column="roleName" property="rolename" jdbcType="VARCHAR" />
+    </association>
+  </resultMap><resultMap id="BaseResultMap1" type="com.zhou.zz.mybaties.model.TUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loginId" property="loginid" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+<!--     <result column="roleId" property="roleid" jdbcType="INTEGER" /> -->
+    <result column="note" property="note" jdbcType="VARCHAR" />
+<!--     <association property="role" javaType="com.zhou.zz.mybaties.model.Role"> -->
+<!--     	<id column="id" property="id" jdbcType="INTEGER" /> -->
+<!--     	<result column="roleName" property="rolename" jdbcType="VARCHAR" /> -->
+<!--     </association> -->
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhou.zz.mybaties.model.TUser" >
+    insert into t_user (id, loginId, userName, 
+      roleId, note)
+    values (#{id,jdbcType=INTEGER}, #{loginid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{roleid,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zhou.zz.mybaties.model.TUser" >
+    update t_user
+    set loginId = #{loginid,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      roleId = #{roleid,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap1" parameterType="java.lang.Integer" >
+    select id, loginId, userName, roleId, note
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, loginId, userName, roleId, note
+    from t_user
+  </select>
+  <select id="getUserWithRole" resultMap="BaseResultMap" parameterType="int">
+  	select m.id id, m.loginId loginId, m.userName userName, m.roleId roleId,m.note note, n.id role_id, n.roleName roleName 
+			from t_user m left join t_role n on m.roleId=n.id
+			where m.id=#{id}
+  </select>
+</mapper>

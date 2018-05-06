@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhou.zz.mybatis.dao.ItemMapper" >
+  <resultMap id="BaseResultMap" type="com.zhou.zz.mybaties.model.Item" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="itemname" property="itemname" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from item
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhou.zz.mybaties.model.Item" >
+    insert into item (id, itemname, price, 
+      detail, picture, createTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{itemname,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{detail,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zhou.zz.mybaties.model.Item" >
+    update item
+    set itemname = #{itemname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      detail = #{detail,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, itemname, price, detail, picture, createTime
+    from item
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, itemname, price, detail, picture, createTime
+    from item
+  </select>
+</mapper>

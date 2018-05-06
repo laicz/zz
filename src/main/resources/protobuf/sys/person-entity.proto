@@ -1,0 +1,6 @@
+option java_outer_classname="PersonEntity";//生成的数据访问类的类名
+message Person{
+	required int32 id = 1;//必须字段，在后面使用中必须使用的字段
+	required string name = 2;//必须字段，在后面使用中必须使用的字段
+	optional string email = 3;//可选字段 
+}

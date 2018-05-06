@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhou.zz.seckill.dao.MeituanMapper" >
+  <resultMap id="BaseResultMap" type="com.zhou.zz.seckill.model.Meituan" >
+    <result column="a" property="a" jdbcType="INTEGER" />
+    <result column="b" property="b" jdbcType="INTEGER" />
+    <result column="c" property="c" jdbcType="INTEGER" />
+    <result column="d" property="d" jdbcType="INTEGER" />
+    <result column="e" property="e" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zhou.zz.seckill.model.Meituan" >
+    insert into meituan (a, b, c, d, 
+      e)
+    values (#{a,jdbcType=INTEGER}, #{b,jdbcType=INTEGER}, #{c,jdbcType=INTEGER}, #{d,jdbcType=INTEGER}, 
+      #{e,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select a, b, c, d, e
+    from meituan
+  </select>
+</mapper>
